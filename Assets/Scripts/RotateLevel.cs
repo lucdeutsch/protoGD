@@ -24,34 +24,58 @@ public class RotateLevel : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
+                if (timesPressed > 0)
+                {
+                    timesPressed -= 1;
+                }
+                else
+                {
+                    timesPressed = 3;
+                }
                 rotate = true;
-                timesPressed++;
-                target = Quaternion.Euler(new Vector3(0, 0, 90 * Mathf.Abs(timesPressed)));
                 right = false;
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("???");
+                if (timesPressed < 3)
+                {
+                    timesPressed += 1;
+                }
+                else
+                {
+                    timesPressed = 0;
+                }
                 rotate = true;
-                timesPressed--;
-                target = Quaternion.Euler(new Vector3(0, 0, -90 *Mathf.Abs(timesPressed) ));
+
                 right = true;
 
             }
 
-            
+
+        }
+
+        switch (timesPressed)
+        {
+            case 0:
+                target = Quaternion.Euler(new Vector3(0, 0, 0)); ;
+                break;
+            case 1:
+                target = Quaternion.Euler(new Vector3(0, 0, 270));
+                break;
+            case 2:
+                target = Quaternion.Euler(new Vector3(0, 0, 180));
+                break;
+            case 3:
+                target = Quaternion.Euler(new Vector3(0, 0, 90));
+                break;
+            default:
+                break;
         }
 
         if (rotate)
         {
-            if (!right)
-            {
-                grid.transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotatespeed * Time.deltaTime);
-            }
-            else
-            {
-                grid.transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotatespeed * Time.deltaTime);
-            }
+            grid.transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotatespeed * Time.deltaTime);
+
         }
 
         if (grid.transform.rotation == target)
