@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+
+public class PlayerController : WorldRules
 {
+
+    
     public GameObject[] rocks;
     public Transform groundCheck;
     public LayerMask ground;
@@ -16,10 +19,12 @@ public class PlayerController : MonoBehaviour
     float baseGravity;
     Vector3 dirRight;
     Vector3 dirLeft;
-    bool isGrounded;
+    public bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
+        
+        SnapToGrid();
         rb = GetComponent<Rigidbody2D>();
         detectWalls = GetComponent<DetectWalls>();
         
@@ -59,7 +64,7 @@ public class PlayerController : MonoBehaviour
                 timesPressed = 3;
             }
 
-
+            
             Rotate();
         }
         if (Input.GetKeyDown(KeyCode.Z) && isGrounded)
@@ -79,7 +84,7 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Q) && detectWalls.canMoveLeft && isGrounded)
         {
-
+            SnapToGrid();
             isMoving = true;
             transform.position += dirRight;
             //rb.MovePosition(new Vector3(transform.position.x - 1, transform.position.y));
@@ -87,7 +92,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D) && detectWalls.canMoveRight && isGrounded)
         {
-
+            SnapToGrid();
             isMoving = true;
             transform.position += dirLeft;
             //rb.MovePosition(new Vector3(transform.position.x + 1, transform.position.y));
@@ -129,6 +134,7 @@ public class PlayerController : MonoBehaviour
     }
     void Rotate()
     {
+        SnapToGrid();
         switch (timesPressed)
         {
             case 0:
