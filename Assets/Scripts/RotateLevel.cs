@@ -8,7 +8,7 @@ public class RotateLevel : MonoBehaviour
     public int timesPressed;
     float rotatespeed = 40f;
     public bool rotate;
-    bool right;
+    
     Quaternion target;
 
     // Start is called before the first frame update
@@ -33,7 +33,6 @@ public class RotateLevel : MonoBehaviour
                     timesPressed = 3;
                 }
                 rotate = true;
-                right = false;
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -46,9 +45,6 @@ public class RotateLevel : MonoBehaviour
                     timesPressed = 0;
                 }
                 rotate = true;
-
-                right = true;
-
             }
 
 
@@ -75,7 +71,6 @@ public class RotateLevel : MonoBehaviour
         if (rotate)
         {
             grid.transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotatespeed * Time.deltaTime);
-
         }
 
         if (grid.transform.rotation == target)

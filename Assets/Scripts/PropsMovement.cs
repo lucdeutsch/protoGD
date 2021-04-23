@@ -12,6 +12,7 @@ public class PropsMovement : MonoBehaviour
     float myAxis;
     public LayerMask delimitations;
     RotateLevel rotateRef;
+    public bool floating;
 
     // Start is called before the first frame update
     void Start()

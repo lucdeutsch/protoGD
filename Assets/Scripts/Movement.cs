@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     public LayerMask pushables;
     public Collider2D currentEllement;
     RotateLevel rotateRef;
+    public bool floating;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,11 @@ public class Movement : MonoBehaviour
     {
         if (!rotateRef.rotate)
         {
+
+            if (transform.position == movePoint.position)
+            {
+                floating = false;
+            }
             myAxis = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
             currentEllement = Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, pushables);
             transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
