@@ -68,18 +68,41 @@ public class Water : MonoBehaviour
 
     void CheckSides()
     {
+        Debug.Log("running");
+        bool bumpedRight = false;
+        bool bumpedleft = false;
+        int x = 0;
+        int y = 0;
         for (int i = 0; i < roomSize; i++)
         {
-            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(i, 0, 0f), .2f, delimitations))
+            
+            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(i+.5f, 0, 0f), .2f, delimitations) && !bumpedRight)
             {
-                transform.localScale += new Vector3(.85f, 0, 0);
-                transform.position += new Vector3(.5f, 0, 0);
+                Debug.Log("space right");
+                transform.localScale += new Vector3(1f, 0, 0);
+                
             }
-            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(-i, 0, 0f), .2f, delimitations))
+            else
             {
-                transform.localScale += new Vector3(.85f, 0, 0);
-                transform.position += new Vector3(.5f, 0, 0);
+                if(!bumpedRight)
+                    x = i;
+                bumpedRight = true;
+            }
+            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(-(i+.5f), 0, 0f), .2f, delimitations)&& !bumpedleft)
+            {
+                Debug.Log("space left");
+                transform.localScale += new Vector3(1f, 0, 0);
+               
+            }
+            else
+            {
+                if(!bumpedleft)
+                    y = i;
+                bumpedleft = true;
             }
         }
+
+        movePoint.position += new Vector3(.5f*(x-y), 0, 0);
+        //transform.localScale -= new Vector3(0,(float)(x+y+1)/10, 0);
     }
 }
