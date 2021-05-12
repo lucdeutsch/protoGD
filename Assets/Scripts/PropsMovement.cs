@@ -11,6 +11,7 @@ public class PropsMovement : MonoBehaviour
     public Transform movePoint;
     float myAxis;
     public LayerMask delimitations;
+    public LayerMask water;
     RotateLevel rotateRef;
     public bool floating;
 
@@ -32,9 +33,16 @@ public class PropsMovement : MonoBehaviour
             {
                 pushed = false;
             }
+            if (Physics2D.OverlapCircle(movePoint.position, .2f, water) || Physics2D.OverlapCircle(movePoint.position + new Vector3(0, -1, 0), .2f, water))
+            {
+                floating = true;
+            }
+            else
+            {
+                floating = false;
+            }
 
-
-            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, -1, 0f), .2f, delimitations) && Mathf.Abs(movePoint.position.x - transform.position.x) <= .05f)
+            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, -1, 0f), .2f, delimitations) && Mathf.Abs(movePoint.position.x - transform.position.x) <= .05f && !floating)
             {
                 movePoint.position += new Vector3(0f, -1, 0f);
             }
@@ -47,7 +55,7 @@ public class PropsMovement : MonoBehaviour
     {
         performed = false;
         dir = direction;
-        if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, delimitations))
+        if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, delimitations)||!Physics2D.OverlapCircle(movePoint.position + new Vector3(0, Input.GetAxisRaw("Vertical"), 0f), .2f, delimitations))
         {
             movePoint.position += dir;
             performed = true;

@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class RotateLevel : MonoBehaviour
 {
+    public static event Action Rotate;
+    public static event Action RotateOver;
     public GameObject grid;
     public int timesPressed;
     float rotatespeed = 40f;
@@ -32,6 +35,7 @@ public class RotateLevel : MonoBehaviour
                 {
                     timesPressed = 3;
                 }
+                Rotate?.Invoke();
                 rotate = true;
             }
             if (Input.GetKeyDown(KeyCode.E))
@@ -44,6 +48,7 @@ public class RotateLevel : MonoBehaviour
                 {
                     timesPressed = 0;
                 }
+                Rotate?.Invoke();
                 rotate = true;
             }
 
@@ -73,9 +78,11 @@ public class RotateLevel : MonoBehaviour
             grid.transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotatespeed * Time.deltaTime);
         }
 
-        if (grid.transform.rotation == target)
+        if (grid.transform.rotation == target && rotate)
         {
+            
             rotate = false;
+            RotateOver?.Invoke();
         }
 
 

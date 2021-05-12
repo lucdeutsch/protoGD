@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6951542826620903759}
   - component: {fileID: 6951542826620903756}
   - component: {fileID: 6951542826620903757}
-  m_Layer: 0
+  - component: {fileID: -65644506650172205}
+  m_Layer: 4
   m_Name: WaterSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e4c2b250f3c4e5f47b20c0107c5c16c0, type: 3}
-  m_Color: {r: 0, g: 0.91080546, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.91080546, b: 1, a: 0.65882355}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -125,13 +126,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterCubePrefab: {fileID: 8963540987327843674, guid: dfc2de1a55d09bc4284862f10f5bbe7a,
     type: 3}
-  waterSourcePrefab: {fileID: 0}
+  waterSourcePrefab: {fileID: 8963540987327843674, guid: dfc2de1a55d09bc4284862f10f5bbe7a,
+    type: 3}
   roomSize: 10
   spreadRange: 1
-  groundCheck: {fileID: 6951542826799004806}
   delimitations:
     serializedVersion: 2
     m_Bits: 768
+--- !u!114 &-65644506650172205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951542826620903746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1baae5d304d84a842813c7270a1817ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  delimitations:
+    serializedVersion: 2
+    m_Bits: 768
+  floatables:
+    serializedVersion: 2
+    m_Bits: 2048
+  currentEllement: {fileID: 0}
 --- !u!1 &6951542826799004807
 GameObject:
   m_ObjectHideFlags: 0
