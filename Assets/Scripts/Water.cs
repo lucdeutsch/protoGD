@@ -28,6 +28,12 @@ public class Water : MonoBehaviour
     {
         if (!rotateRef.rotate)
         {
+            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, -1, 0f), .2f, delimitations) && Mathf.Abs(movePoint.position.x - transform.position.x) <= .05f)
+            {
+
+                movePoint.position += new Vector3(0f, -1, 0f);
+                
+            }
             if (transform.position == movePoint.position && !checkedSides)
             {
                 CheckSides();
@@ -57,12 +63,7 @@ public class Water : MonoBehaviour
                     }
                 }
             }
-            if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, -1, 0f), .2f, delimitations) && Mathf.Abs(movePoint.position.x - transform.position.x) <= .05f)
-            {
-
-                movePoint.position += new Vector3(0f, -1, 0f);
-                checkedSides = false;
-            }
+            
         }
     }
 
