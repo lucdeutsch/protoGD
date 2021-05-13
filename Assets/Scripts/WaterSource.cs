@@ -12,57 +12,64 @@ public class WaterSource : MonoBehaviour
     RotateLevel rotateRef;
     public LayerMask delimitations;
     bool hitFloor;
+
+    public bool activated;
     // Start is called before the first frame update
     void Start()
     {
         rotateRef = FindObjectOfType<RotateLevel>();
-        Spread();
+
         RotateLevel.Rotate += ResetSpread;
         RotateLevel.RotateOver += Spread;
+        Spread();
+
     }
 
     // Update is called once per frame
 
 
-    void Spread()
+    public void Spread()
     {
-        Debug.Log("owo");
-        for (var i = 1; i < roomSize; i++)
+        if (activated)
         {
-            if (!Physics2D.OverlapCircle(transform.position + new Vector3(0, -(i), 0f), .2f, delimitations) && !hitFloor)
+            for (var i = 1; i < roomSize; i++)
             {
-                Debug.Log("space down");
-                GameObject waterClone = Instantiate(waterCubePrefab, transform.position + new Vector3(0, -(i), 0), Quaternion.identity);
-                waterClone.name = "Clone " + i.ToString();
-                waterClones.Add(waterClone);
-                waterClone.transform.parent = this.transform;
-            }
-            else
-            {
-                hitFloor = true;
-            }
-            if (Physics2D.OverlapCircle(transform.position + new Vector3(0, -(i + 1), 0f), .2f, delimitations) && !hitFloor)
-            {
-                for (int j = 0; j < spreadRange; j++)
+                if (!Physics2D.OverlapCircle(transform.position + new Vector3(0, -(i), 0f), .2f, delimitations) && !hitFloor)
                 {
-                    if (!Physics2D.OverlapCircle(transform.position + new Vector3(j + 1, -(i), 0f), .2f, delimitations))
+
+                    GameObject waterClone = Instantiate(waterCubePrefab, transform.position + new Vector3(0, -(i), 0), Quaternion.identity);
+                    waterClone.name = "Clone " + i.ToString();
+                    waterClones.Add(waterClone);
+                    waterClone.transform.parent = this.transform;
+                }
+                else
+                {
+                    hitFloor = true;
+                }
+                if (Physics2D.OverlapCircle(transform.position + new Vector3(0, -(i + 1), 0f), .2f, delimitations) && !hitFloor)
+                {
+                    for (int j = 0; j < spreadRange; j++)
                     {
-                        GameObject waterSideClone = Instantiate(waterSourcePrefab, transform.position + new Vector3(j + 1, -(i), 0), Quaternion.identity);
-                        waterClones.Add(waterSideClone);
-                        waterSideClone.transform.parent = this.transform;
-                    }
-                    if (!Physics2D.OverlapCircle(transform.position + new Vector3(-(j + 1), -(i), 0f), .2f, delimitations))
-                    {
-                        GameObject waterSideClone1 = Instantiate(waterSourcePrefab, transform.position + new Vector3(-(j + 1), -(i), 0), Quaternion.identity);
-                        waterClones.Add(waterSideClone1);
-                        waterSideClone1.transform.parent = this.transform;
+                        if (!Physics2D.OverlapCircle(transform.position + new Vector3(j + 1, -(i), 0f), .2f, delimitations))
+                        {
+                            GameObject waterSideClone = Instantiate(waterSourcePrefab, transform.position + new Vector3(j + 1, -(i), 0), Quaternion.identity);
+                            waterClones.Add(waterSideClone);
+                            waterSideClone.transform.parent = this.transform;
+                        }
+                        if (!Physics2D.OverlapCircle(transform.position + new Vector3(-(j + 1), -(i), 0f), .2f, delimitations))
+                        {
+                            GameObject waterSideClone1 = Instantiate(waterSourcePrefab, transform.position + new Vector3(-(j + 1), -(i), 0), Quaternion.identity);
+                            waterClones.Add(waterSideClone1);
+                            waterSideClone1.transform.parent = this.transform;
+                        }
+
                     }
 
                 }
-
             }
+            hitFloor = false;
         }
-        hitFloor = false;
+
 
     }
 

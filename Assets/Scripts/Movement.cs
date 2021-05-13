@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     public LayerMask delimitations;
     public LayerMask pushables;
     public LayerMask water;
+    public LayerMask ground;
     public Collider2D currentEllement;
     public Collider2D currentEllementVertical;
     RotateLevel rotateRef;
@@ -44,7 +45,7 @@ public class Movement : MonoBehaviour
                 if (myAxis == 1f || vertAxis == 1f)
                 {
 
-                    if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, delimitations))
+                    if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, delimitations) && Physics2D.OverlapCircle(movePoint.position + new Vector3(0, -1, 0f), .2f, ground))
                     {
                         movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                     }
@@ -69,6 +70,24 @@ public class Movement : MonoBehaviour
                         }
 
                     }
+                    if (Physics2D.OverlapCircle(transform.position + new Vector3(0, 1f, 0f), .2f, pushables)&&myAxis == 1f )
+                    {
+                        
+                        if (currentEllementVertical != null)
+                        {
+                            
+                            if (currentEllementVertical.gameObject.GetComponent<PropsMovement>().pushed == false)
+                            {
+                                
+                                currentEllementVertical.gameObject.GetComponent<PropsMovement>().pushed = true;
+
+                                currentEllementVertical.gameObject.GetComponent<PropsMovement>().Push(new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0f));
+
+                                
+
+                            }
+                        }
+                    }
                     if (Physics2D.OverlapCircle(movePoint.position, .2f, water) || Physics2D.OverlapCircle(movePoint.position + new Vector3(0, -1, 0), .2f, water))
                     {
                         floating = true;
@@ -85,10 +104,12 @@ public class Movement : MonoBehaviour
                             movePoint.position += new Vector3(0, Input.GetAxisRaw("Vertical"), 0f);
 
                         }
-                        if (currentEllementVertical != null && Physics2D.OverlapCircle(movePoint.position, .2f, water) )
+                        if (currentEllementVertical != null && Physics2D.OverlapCircle(movePoint.position, .2f, water))
                         {
+                            
                             if (currentEllementVertical.gameObject.GetComponent<PropsMovement>().pushed == false)
                             {
+                                Debug.Log("working");
                                 currentEllementVertical.gameObject.GetComponent<PropsMovement>().pushed = true;
 
                                 currentEllementVertical.gameObject.GetComponent<PropsMovement>().Push(new Vector3(0, Input.GetAxisRaw("Vertical"), 0f));

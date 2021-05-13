@@ -11,19 +11,23 @@ public class RotateLevel : MonoBehaviour
     public int timesPressed;
     float rotatespeed = 40f;
     public bool rotate;
-    
+    public bool enableRotation;
     Quaternion target;
+    Vector3 prevPos;
+    Transform cameraPos;
+    int rotateOffset;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        cameraPos = FindObjectOfType<Camera>().transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!rotate)
+
+        if (!rotate && enableRotation)
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -37,6 +41,8 @@ public class RotateLevel : MonoBehaviour
                 }
                 Rotate?.Invoke();
                 rotate = true;
+                prevPos = grid.transform.position;
+                rotateOffset = 1;
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -50,6 +56,8 @@ public class RotateLevel : MonoBehaviour
                 }
                 Rotate?.Invoke();
                 rotate = true;
+                prevPos = grid.transform.position;
+                rotateOffset =-1;
             }
 
 
@@ -58,7 +66,7 @@ public class RotateLevel : MonoBehaviour
         switch (timesPressed)
         {
             case 0:
-                target = Quaternion.Euler(new Vector3(0, 0, 0)); ;
+                target = Quaternion.Euler(new Vector3(0, 0, 0));
                 break;
             case 1:
                 target = Quaternion.Euler(new Vector3(0, 0, 270));
@@ -75,12 +83,14 @@ public class RotateLevel : MonoBehaviour
 
         if (rotate)
         {
-            grid.transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotatespeed * Time.deltaTime);
+            //grid.transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotatespeed * Time.deltaTime);
+            grid.transform.RotateAround(new Vector3(cameraPos.position.x,cameraPos.position.y,grid.transform.position.z),
+            new Vector3(0,0,1),rotatespeed*Time.deltaTime* rotateOffset);
         }
 
-        if (grid.transform.rotation == target && rotate)
+        if (Mathf.Abs(grid.transform.rotation.eulerAngles.z - target.eulerAngles.z) <= .5f && rotate)
         {
-            
+            grid.transform.rotation = target;
             rotate = false;
             RotateOver?.Invoke();
         }
@@ -90,6 +100,8 @@ public class RotateLevel : MonoBehaviour
 
 
     }
+
+    
 
 
 }

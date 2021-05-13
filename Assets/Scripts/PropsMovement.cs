@@ -15,6 +15,14 @@ public class PropsMovement : MonoBehaviour
     RotateLevel rotateRef;
     public bool floating;
 
+    public enum Type
+    {
+        Rock,
+        Wood
+    }
+
+    public Type objectType;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +34,7 @@ public class PropsMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (!rotateRef.rotate)
         {
             transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
@@ -33,8 +42,9 @@ public class PropsMovement : MonoBehaviour
             {
                 pushed = false;
             }
-            if (Physics2D.OverlapCircle(movePoint.position, .2f, water) || Physics2D.OverlapCircle(movePoint.position + new Vector3(0, -1, 0), .2f, water))
+            if ((Physics2D.OverlapCircle(movePoint.position, .2f, water) || Physics2D.OverlapCircle(movePoint.position + new Vector3(0, -1, 0), .2f, water))&&objectType != Type.Rock)
             {
+                
                 floating = true;
             }
             else
