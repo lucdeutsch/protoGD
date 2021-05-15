@@ -12,11 +12,13 @@ public class WaterSource : MonoBehaviour
     RotateLevel rotateRef;
     public LayerMask delimitations;
     bool hitFloor;
+    public Animator animator;
 
     public bool activated;
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         rotateRef = FindObjectOfType<RotateLevel>();
 
         RotateLevel.Rotate += ResetSpread;
@@ -26,12 +28,30 @@ public class WaterSource : MonoBehaviour
     }
 
     // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Refresh();
+        }
+    }
+    public void Refresh()
+    {
+        ResetSpread();
+        Spread();
+    }
 
+    private void OnDestroy() {
+        ResetSpread();
+    }
 
     public void Spread()
     {
         if (activated)
         {
+            animator.enabled = true;
+
+
             for (var i = 1; i < roomSize; i++)
             {
                 if (!Physics2D.OverlapCircle(transform.position + new Vector3(0, -(i), 0f), .2f, delimitations) && !hitFloor)
@@ -40,7 +60,7 @@ public class WaterSource : MonoBehaviour
                     GameObject waterClone = Instantiate(waterCubePrefab, transform.position + new Vector3(0, -(i), 0), Quaternion.identity);
                     waterClone.name = "Clone " + i.ToString();
                     waterClones.Add(waterClone);
-                    waterClone.transform.parent = this.transform;
+
                 }
                 else
                 {
@@ -54,13 +74,13 @@ public class WaterSource : MonoBehaviour
                         {
                             GameObject waterSideClone = Instantiate(waterSourcePrefab, transform.position + new Vector3(j + 1, -(i), 0), Quaternion.identity);
                             waterClones.Add(waterSideClone);
-                            waterSideClone.transform.parent = this.transform;
+
                         }
                         if (!Physics2D.OverlapCircle(transform.position + new Vector3(-(j + 1), -(i), 0f), .2f, delimitations))
                         {
                             GameObject waterSideClone1 = Instantiate(waterSourcePrefab, transform.position + new Vector3(-(j + 1), -(i), 0), Quaternion.identity);
                             waterClones.Add(waterSideClone1);
-                            waterSideClone1.transform.parent = this.transform;
+
                         }
 
                     }
@@ -73,8 +93,14 @@ public class WaterSource : MonoBehaviour
 
     }
 
-    void ResetSpread()
+    public void ResetSpread()
     {
+
+        if (animator != null)
+        {
+            animator.enabled = false;
+        }
+
         for (int i = 0; i < waterClones.Count; i++)
         {
             Destroy(waterClones[i]);

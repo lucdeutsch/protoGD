@@ -16,11 +16,13 @@ public class Movement : MonoBehaviour
     public Collider2D currentEllementVertical;
     RotateLevel rotateRef;
     public bool floating;
+    Animator animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rotateRef = FindObjectOfType<RotateLevel>();
         movePoint.parent = rotateRef.grid.transform;
         transform.parent = rotateRef.grid.transform;
@@ -29,7 +31,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        FLip();
         if (!rotateRef.rotate)
         {
 
@@ -139,6 +141,24 @@ public class Movement : MonoBehaviour
 
     }
 
+    void FLip()
+    {
+        if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0,180,0));
+            animator.SetBool("Running",true);
+        }
+        else if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+            animator.SetBool("Running",true);
+        }
+        else
+        {
+            animator.SetBool("Running",false);
+        }
+        
+    }
 
     void OnDrawGizmos()
     {

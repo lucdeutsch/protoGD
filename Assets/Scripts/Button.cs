@@ -5,15 +5,43 @@ using UnityEngine;
 public class Button : MonoBehaviour
 {
     bool pressed;
+    public List<string> colliders = new List<string>();
     public WaterSource[] linkedSources;
-    
-    private void OnTriggerEnter2D(Collider2D other) 
+    public GameObject[] Barrier;
+    public Transform offset;
+    public Vector3 basePos;
+    public bool stayActive;
+
+    private void Start()
     {
-        if (other.tag == "Player" || other.tag == "Prop")
+        basePos = transform.position;
+        RotateLevel.RotateOver += RefreshPos;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (colliders.Contains(other.tag))
         {
             Press();
         }
-        
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (!stayActive)
+        {
+            if (colliders.Contains(other.tag))
+            {
+                ResetButton();
+            }
+        }
+
+
+    }
+
+    void RefreshPos()
+    {
+        basePos = transform.position;
     }
 
     void Press()
@@ -21,12 +49,46 @@ public class Button : MonoBehaviour
         if (!pressed)
         {
             pressed = true;
-            transform.position -= new Vector3(0,.25f,0);
+            transform.position = offset.position;
             foreach (WaterSource item in linkedSources)
             {
                 item.activated = true;
                 item.Spread();
             }
+            if (Barrier != null)
+            {
+                foreach (GameObject item in Barrier)
+                {
+                    item.SetActive(false);
+                }
+
+            }
+
         }
     }
+
+    void ResetButton()
+    {
+        if (pressed)
+        {
+            pressed = false;
+            transform.position = basePos;
+            foreach (WaterSource item in linkedSources)
+            {
+                item.activated = false;
+                item.ResetSpread();
+            }
+            if (Barrier != null)
+            {
+                foreach (GameObject item in Barrier)
+                {
+                    item.SetActive(true);
+                }
+
+            }
+
+        }
+    }
+
+
 }

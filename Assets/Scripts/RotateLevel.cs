@@ -12,7 +12,8 @@ public class RotateLevel : MonoBehaviour
     float rotatespeed = 40f;
     public bool rotate;
     public bool enableRotation;
-    Quaternion target;
+    [HideInInspector]
+    public Quaternion target;
     Vector3 prevPos;
     Transform cameraPos;
     int rotateOffset;
