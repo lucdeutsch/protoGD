@@ -13,6 +13,7 @@ public class WaterSource : MonoBehaviour
     public LayerMask delimitations;
     bool hitFloor;
     public Animator animator;
+    public bool canRefresh;
 
     public bool activated;
     // Start is called before the first frame update
@@ -30,7 +31,7 @@ public class WaterSource : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && canRefresh)
         {
             Refresh();
         }
