@@ -14,6 +14,7 @@ public class PropsMovement : MonoBehaviour
     public LayerMask water;
     RotateLevel rotateRef;
     public bool floating;
+    List<WaterSource> waterSources = new List<WaterSource>();
 
     public enum Type
     {
@@ -26,6 +27,10 @@ public class PropsMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        foreach (WaterSource item in FindObjectsOfType<WaterSource>())
+        {
+            waterSources.Add(item);
+        }
         rotateRef = FindObjectOfType<RotateLevel>();
         movePoint.parent = rotateRef.grid.transform;
         transform.parent = rotateRef.grid.transform;
@@ -63,6 +68,7 @@ public class PropsMovement : MonoBehaviour
 
     public void Push(Vector3 direction)
     {
+        
         performed = false;
         dir = direction;
         if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, delimitations)||!Physics2D.OverlapCircle(movePoint.position + new Vector3(0, Input.GetAxisRaw("Vertical"), 0f), .2f, delimitations))
@@ -70,5 +76,18 @@ public class PropsMovement : MonoBehaviour
             movePoint.position += dir;
             performed = true;
         }
+        foreach (WaterSource item in waterSources)
+        {
+            if (item.canRefresh)
+            {
+                StartCoroutine(autoRefresh(item));
+            }
+        }
+    }
+
+    IEnumerator autoRefresh(WaterSource waterSource)
+    {
+        yield return new WaitForSeconds(.2f);
+        waterSource.Refresh();
     }
 }
