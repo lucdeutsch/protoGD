@@ -15,7 +15,12 @@ public class EndLevel : MonoBehaviour
             Win();
         }
     }
-
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Win();
+        }
+    }
 
     void Win()
     {
@@ -25,7 +30,7 @@ public class EndLevel : MonoBehaviour
 
     IEnumerator winPanelApparition()
     {
-        Time.timeScale = 0;
+        
         yield return new WaitForSecondsRealtime(2);
         winText.SetActive(false);
         winPanel.SetActive(true);

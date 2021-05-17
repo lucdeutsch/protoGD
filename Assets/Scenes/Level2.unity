@@ -910,13 +910,23 @@ PrefabInstance:
     - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
         type: 3}
       propertyPath: colliders.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
         type: 3}
       propertyPath: Barrier.Array.data[0]
       value: 
       objectReference: {fileID: 1975417667}
+    - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
+        type: 3}
+      propertyPath: colliders.Array.data[0]
+      value: Prop
+      objectReference: {fileID: 0}
+    - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
+        type: 3}
+      propertyPath: colliders.Array.data[1]
+      value: Rock
+      objectReference: {fileID: 0}
     - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
         type: 3}
       propertyPath: colliders.Array.data[2]

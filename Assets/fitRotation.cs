@@ -13,6 +13,10 @@ public class fitRotation : MonoBehaviour
     // Update is called once per frame
     void Fit()
     {
-        transform.rotation = Quaternion.identity;
+        if (this != null)
+        {
+            transform.rotation = Quaternion.identity;
+        }
+        
     }
 }

@@ -14,13 +14,13 @@ public class Menuing : MonoBehaviour
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        Time.timeScale = 1;
+        
     }
 
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = 1;
+        
     }
 
 
@@ -34,7 +34,7 @@ public class Menuing : MonoBehaviour
     public void SpecificLevelPicker(int Level)
     {
         SceneManager.LoadScene(Level);
-        Time.timeScale = 1;
+        
     }
     
     public void SelectLevelReturn(GameObject SelectGroup)

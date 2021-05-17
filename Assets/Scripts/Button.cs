@@ -41,7 +41,11 @@ public class Button : MonoBehaviour
 
     void RefreshPos()
     {
-        basePos = transform.position;
+        if (this != null)
+        {
+            basePos = transform.position;
+        }
+        
     }
 
     void Press()

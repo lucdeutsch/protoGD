@@ -345,12 +345,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliders:
   - Rock
+  - Player
+  - Prop
   linkedSources:
   - {fileID: 2565888219876480366}
   Barrier: []
   offset: {fileID: 681444432}
   basePos: {x: 0, y: 0, z: 0}
-  stayActive: 0
+  stayActive: 1
 --- !u!50 &704289356
 Rigidbody2D:
   serializedVersion: 4
@@ -396,6 +398,11 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 4055260516947318724}
+    - target: {fileID: 5568955039018769928, guid: 960e9aadfbae56a41a2f869c83cb8e1a,
+        type: 3}
+      propertyPath: enableRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5568955039018769930, guid: 960e9aadfbae56a41a2f869c83cb8e1a,
         type: 3}
       propertyPath: m_RootOrder
@@ -826,6 +833,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   animator: {fileID: 0}
+  canRefresh: 0
   activated: 0
 --- !u!61 &2565888219876480367
 BoxCollider2D:

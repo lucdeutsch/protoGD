@@ -193,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliders:
   - Wood
+  - Prop
   linkedSources:
   - {fileID: 7214871070911148565}
   Barrier:
@@ -3090,9 +3091,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
         type: 3}
+      propertyPath: stayActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
+        type: 3}
       propertyPath: Barrier.Array.data[0]
       value: 
       objectReference: {fileID: 5193563784422479996}
+    - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
+        type: 3}
+      propertyPath: linkedSources.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 546044469956089442, guid: 4eea71273058086409b1716468df36d2,
         type: 3}
       propertyPath: linkedSources.Array.data[0]
@@ -3553,6 +3564,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1530126404116863542, guid: 1db0f4b288a88474798db2bb1debb6e3,
+        type: 3}
+      propertyPath: activated
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1530126404116863542, guid: 1db0f4b288a88474798db2bb1debb6e3,
         type: 3}

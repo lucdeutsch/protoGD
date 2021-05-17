@@ -48,7 +48,7 @@ public class WaterSource : MonoBehaviour
 
     public void Spread()
     {
-        if (activated)
+        if (activated && this != null)
         {
             animator.enabled = true;
 
